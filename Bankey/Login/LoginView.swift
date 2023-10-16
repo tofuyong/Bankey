@@ -11,6 +11,7 @@ import UIKit
 class LoginView: UIView {
     
     let stackView = UIStackView()
+//    let brandLabel = UILabel()
     let usernameTextField = UITextField()
     let passwordTextField = UITextField()
     let dividerView = UIView()
@@ -35,10 +36,13 @@ extension LoginView {
     func style() {
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .secondarySystemBackground
-        
+
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.spacing = 8
+        
+//        brandLabel.translatesAutoresizingMaskIntoConstraints = false
+//        brandLabel.text = "Bankey"
         
         usernameTextField.translatesAutoresizingMaskIntoConstraints = false
         usernameTextField.placeholder = "Username"
@@ -61,6 +65,7 @@ extension LoginView {
         stackView.addArrangedSubview(dividerView)
         stackView.addArrangedSubview(passwordTextField)
         
+//        addSubview(brandLabel)
         addSubview(stackView)
         
         NSLayoutConstraint.activate([
