@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Think of LocalState as a customized UserDefaults (a wrapper for UserDefaults)
 public class LocalState {
     
     private enum Keys: String {
@@ -19,7 +20,6 @@ public class LocalState {
         }
         set(newValue) {
             UserDefaults.standard.set(newValue, forKey: Keys.hasOnboarded.rawValue)
-            UserDefaults.standard.synchronize()
         }
     }
 }
