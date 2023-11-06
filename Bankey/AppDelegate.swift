@@ -24,7 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         window?.backgroundColor = .systemBackground
-        window?.rootViewController = mainViewController
+        window?.rootViewController = AccountSummaryViewController()
+//        window?.rootViewController = mainViewController
 //        window?.rootViewController = LoginViewController()
 //        window?.rootViewController = onboardingContainerViewController
 //        window?.rootViewController = OnboardingViewController(heroImageName: "delorean", titleText: "Bankey is faster, easier to use, and has a brand new look and feel that will make you feel like you are back in 1980.")
