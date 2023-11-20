@@ -32,6 +32,8 @@ extension AccountSummaryViewController {
     }
     
     private func setUpTableView() {
+        tableView.backgroundColor = appColor // ensures background is consistent when screen is dragged down
+        
         // setting up 2 protocol delegates
         tableView.delegate = self // for action callbacks i.e. if anyone taps on cell
         tableView.dataSource = self // for data
@@ -94,12 +96,18 @@ extension AccountSummaryViewController: UITableViewDelegate {
 extension AccountSummaryViewController {
     private func fetchData() {
         // mock fetch data network call
-        let savings = AccountSummaryCell.ViewModel(accountType: .Banking, accountName: "Basic Savings")
-        let visa = AccountSummaryCell.ViewModel(accountType: .CreditCard, accountName: "Visa Card")
-        let investment = AccountSummaryCell.ViewModel(accountType: .Investment, accountName: "Tax-Free Saver")
+        let savings = AccountSummaryCell.ViewModel(accountType: .Banking, accountName: "Basic Savings", balance: 929466.23)
+        let chequing = AccountSummaryCell.ViewModel(accountType: .Banking, accountName: "No-Fee All-In chequing", balance: 17562.44)
+        let visa = AccountSummaryCell.ViewModel(accountType: .CreditCard, accountName: "Visa Avion Card", balance: 412.83)
+        let masterCard = AccountSummaryCell.ViewModel(accountType: .CreditCard, accountName: "Student Mastercard", balance: 50.83)
+        let investment1 = AccountSummaryCell.ViewModel(accountType: .Investment, accountName: "Tax-Free Saver", balance: 2000.00)
+        let investment2 = AccountSummaryCell.ViewModel(accountType: .Investment, accountName: "Growth Fund", balance: 15000.00)
         
         accounts.append(savings)
+        accounts.append(chequing)
         accounts.append(visa)
-        accounts.append(investment)
+        accounts.append(masterCard)
+        accounts.append(investment1)
+        accounts.append(investment2)
     }
 }
