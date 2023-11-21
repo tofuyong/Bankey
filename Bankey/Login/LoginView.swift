@@ -41,9 +41,6 @@ extension LoginView {
         stackView.axis = .vertical
         stackView.spacing = 8
         
-//        brandLabel.translatesAutoresizingMaskIntoConstraints = false
-//        brandLabel.text = "Bankey"
-        
         usernameTextField.translatesAutoresizingMaskIntoConstraints = false
         usernameTextField.placeholder = "Username"
         usernameTextField.delegate = self // registering ourselves (this view) as a delegate for the text field
@@ -52,6 +49,7 @@ extension LoginView {
         passwordTextField.placeholder = "Password"
         passwordTextField.isSecureTextEntry = true
         passwordTextField.delegate = self
+        passwordTextField.enablePasswordToggle()
         
         dividerView.translatesAutoresizingMaskIntoConstraints = false
         dividerView.backgroundColor = .secondarySystemFill
