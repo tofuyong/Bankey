@@ -26,6 +26,7 @@
 		DE8221C22AD537FD009E7898 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE8221C12AD537FD009E7898 /* Assets.xcassets */; };
 		DE8221C52AD537FD009E7898 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE8221C32AD537FD009E7898 /* LaunchScreen.storyboard */; };
 		DE8221CF2AD53B33009E7898 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8221CE2AD53B33009E7898 /* LoginView.swift */; };
+		DED704782B10413000181184 /* ShakeyBell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED704772B10413000181184 /* ShakeyBell.swift */; };
 		DEE76FD42AFE69CD0065BCAE /* AccountSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE76FD32AFE69CD0065BCAE /* AccountSummaryCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		DE8221C42AD537FD009E7898 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DE8221C62AD537FD009E7898 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DE8221CE2AD53B33009E7898 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		DED704772B10413000181184 /* ShakeyBell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeyBell.swift; sourceTree = "<group>"; };
 		DEE76FD32AFE69CD0065BCAE /* AccountSummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSummaryCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -150,6 +152,7 @@
 				DE50DCBB2AD7C95000A266D3 /* Onboarding */,
 				DE5343B12AF90EFF008E28F8 /* AccountSummary */,
 				DE6D86C22ADD04E700BD2114 /* Utils */,
+				DED704762B10410500181184 /* Components */,
 				DE8221CC2AD53AA4009E7898 /* Files */,
 			);
 			path = Bankey;
@@ -173,6 +176,14 @@
 				DE6D86C02ADCE38000BD2114 /* DummyViewController.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		DED704762B10410500181184 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				DED704772B10413000181184 /* ShakeyBell.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		DEE76FD12AFE69920065BCAE /* Header */ = {
@@ -314,6 +325,7 @@
 				DE8221BD2AD537FC009E7898 /* LoginViewController.swift in Sources */,
 				DEE76FD42AFE69CD0065BCAE /* AccountSummaryCell.swift in Sources */,
 				DE50DCBF2AD7D10100A266D3 /* OnboardingViewController.swift in Sources */,
+				DED704782B10413000181184 /* ShakeyBell.swift in Sources */,
 				DE6D86C92ADD15B800BD2114 /* MainViewController.swift in Sources */,
 				DE5343B32AF90F23008E28F8 /* AccountSummaryViewController.swift in Sources */,
 				DE8221B92AD537FC009E7898 /* AppDelegate.swift in Sources */,
