@@ -8,14 +8,14 @@
 import Foundation
 import UIKit
 
+// AccountType and ViewModel can be defined internally or externally
+enum AccountType: String, Codable {
+    case Banking
+    case CreditCard
+    case Investment
+}
+
 class AccountSummaryCell: UITableViewCell {
-    
-    // AccountType and ViewModel can also be defined externally
-    enum AccountType: String {
-        case Banking
-        case CreditCard
-        case Investment
-    }
     
     struct ViewModel {
         let accountType: AccountType
