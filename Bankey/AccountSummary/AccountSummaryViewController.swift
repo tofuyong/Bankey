@@ -22,6 +22,8 @@ class AccountSummaryViewController: UIViewController {
     var headerView = AccountSummaryHeaderView(frame: .zero)
     let refreshControl = UIRefreshControl()
     
+    var isLoaded = false
+    
     // lazy = only instantiated when called, not on start up
     lazy var logoutBarButtonItem: UIBarButtonItem = {
         let barButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutTapped))
@@ -35,12 +37,14 @@ class AccountSummaryViewController: UIViewController {
     }
 }
 
+// MARK: - SETUP
 extension AccountSummaryViewController {
-    func setup() {
+    private func setup() {
         setupNavigationBar()
         setUpTableView()
         setUpTableHeaderView()
         setUpRefreshControl()
+        setupSkeletons()
         fetchData()
     }
     
@@ -52,9 +56,9 @@ extension AccountSummaryViewController {
         tableView.dataSource = self // for data
         
         tableView.register(AccountSummaryCell.self, forCellReuseIdentifier: AccountSummaryCell.reuseID)
+        tableView.register(SkeletonCell.self, forCellReuseIdentifier: SkeletonCell.reuseID)
         tableView.rowHeight = AccountSummaryCell.rowHeight
-        tableView.tableFooterView = UIView()
-        
+        tableView.tableFooterView = UIView() // sets an empty UIView as footer so as not to display extra empty cells at bottom of table view
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
@@ -84,35 +88,55 @@ extension AccountSummaryViewController {
         refreshControl.addTarget(self, action: #selector(refreshContent), for: .valueChanged)
         tableView.refreshControl = refreshControl
     }
+    
+    private func setupSkeletons() {
+        let row = Account.makeSkeleton()
+        accounts = Array(repeating: row, count: 10)
+        configureTableCells(with: accounts)
+    }
 }
 
 extension AccountSummaryViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = UITableViewCell()
-//        cell.textLabel?.text = games[indexPath.row]
-        
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+////        let cell = UITableViewCell()
+////        cell.textLabel?.text = games[indexPath.row]
+//
+////        let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryCell.reuseID, for: indexPath) as! AccountSummaryCell
+////        return cell
+//        guard !accounts.isEmpty else { return UITableViewCell() }
+//
 //        let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryCell.reuseID, for: indexPath) as! AccountSummaryCell
+//        let account = accounts[indexPath.row]
+////        cell.configure(with: account)
+//
+//        // Create a ViewModel from the Account object (not in lecture)
+//        let viewModel = AccountSummaryCell.ViewModel(
+//            accountType: account.type,
+//            accountName: account.name,
+//            balance: account.amount
+//        )
+//
+//        cell.configure(with: viewModel)
+//
 //        return cell
-        guard !accounts.isEmpty else { return UITableViewCell() }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryCell.reuseID, for: indexPath) as! AccountSummaryCell
-        let account = accounts[indexPath.row]
-//        cell.configure(with: account)
-        
-        // Create a ViewModel from the Account object
-        let viewModel = AccountSummaryCell.ViewModel(
-            accountType: account.type,
-            accountName: account.name,
-            balance: account.amount
-        )
-
-        cell.configure(with: viewModel)
+//    }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard !accountCellViewModels.isEmpty else { return UITableViewCell() }
+        let account = accountCellViewModels[indexPath.row]
+        
+        if isLoaded {
+            let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryCell.reuseID, for: indexPath) as! AccountSummaryCell
+            cell.configure(with: account)
+            return cell
+        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: SkeletonCell.reuseID, for: indexPath) as! SkeletonCell
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return accounts.count
+        return accountCellViewModels.count
     }
 }
 
@@ -121,25 +145,6 @@ extension AccountSummaryViewController: UITableViewDelegate {
 
     }
 }
-
-//extension AccountSummaryViewController {
-//    private func fetchAccounts() {
-//        // mock fetch data network call
-//        let savings = AccountSummaryCell.ViewModel(accountType: .Banking, accountName: "Basic Savings", balance: 929466.23)
-//        let chequing = AccountSummaryCell.ViewModel(accountType: .Banking, accountName: "No-Fee All-In chequing", balance: 17562.44)
-//        let visa = AccountSummaryCell.ViewModel(accountType: .CreditCard, accountName: "Visa Avion Card", balance: 412.83)
-//        let masterCard = AccountSummaryCell.ViewModel(accountType: .CreditCard, accountName: "Student Mastercard", balance: 50.83)
-//        let investment1 = AccountSummaryCell.ViewModel(accountType: .Investment, accountName: "Tax-Free Saver", balance: 2000.00)
-//        let investment2 = AccountSummaryCell.ViewModel(accountType: .Investment, accountName: "Growth Fund", balance: 15000.00)
-//        
-//        accounts.append(savings)
-//        accounts.append(chequing)
-//        accounts.append(visa)
-//        accounts.append(masterCard)
-//        accounts.append(investment1)
-//        accounts.append(investment2)
-//    }
-//}
 
 // MARK: - Networking
 extension AccountSummaryViewController {
@@ -151,11 +156,23 @@ extension AccountSummaryViewController {
         
         fetchProfile(forUserId: userId) { result in
             switch result {
+                
             case .success(let profile):
                 self.profile = profile
                 self.configureTableHeaderView(with: profile)
+                
             case .failure(let error):
-                print(error.localizedDescription)
+                let title: String
+                let message: String
+                switch error {
+                    case .serverError:
+                        title = "Server Error"
+                        message = "Ensure you are connected to the internet. Please try again."
+                    case .decodingError:
+                        title = "Decoder Error"
+                        message = "We could not process your request. Please try again."
+                }
+                self.showErrorAlert(title: title, message: message)
             }
             group.leave()
         }
@@ -167,14 +184,20 @@ extension AccountSummaryViewController {
                 self.accounts = accounts
                 self.configureTableCells(with: accounts)
             case .failure(let error):
-                print(error.localizedDescription)
+                self.displayError(error)
             }
             group.leave()
         }
         
         group.notify(queue: .main) {
-            self.tableView.reloadData()
             self.tableView.refreshControl?.endRefreshing()
+                
+            guard let profile = self.profile else { return }
+            
+            self.isLoaded = true
+            self.configureTableHeaderView(with: profile) // both header and cell will reload at the same time
+            self.configureTableCells(with: self.accounts) // both header and cell will reload at the same time
+            self.tableView.reloadData()
         }
     }
     
@@ -188,6 +211,31 @@ extension AccountSummaryViewController {
             AccountSummaryCell.ViewModel(accountType: $0.type, accountName: $0.name, balance: $0.amount)
         }
     }
+    
+    private func showErrorAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func displayError(_ error: Networking) {
+        let title: String
+        let message: String
+        switch error {
+        case .serverError:
+            title = "Server Error"
+            message = "We could not process your request. Please try again."
+        case .decodingError:
+            title = "Network Error"
+            message = "Ensure you are connected to the internet. Please try again."
+        }
+        self.showErrorAlert(title: title, message: message)
+    }
+    
 }
 
 // MARK: - Actions
@@ -197,6 +245,15 @@ extension AccountSummaryViewController {
     }
     
     @objc func refreshContent() {
+        reset()
+        setupSkeletons()
+        tableView.reloadData()
         fetchData()
+    }
+    
+    private func reset() {
+        profile = nil
+        accounts = []
+        isLoaded = false
     }
 }

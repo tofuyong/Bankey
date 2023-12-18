@@ -53,6 +53,11 @@ class AccountSummaryHeaderView: UIView {
         contentView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         contentView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         
+        print("All constraints for nameLabel: \(nameLabel.constraints)")
+        print("All constraints for dateLabel: \(dateLabel.constraints)")
+        nameLabel.setContentCompressionResistancePriority(.defaultLow + 1, for: .vertical)
+        dateLabel.setContentCompressionResistancePriority(.defaultLow + 1, for: .vertical)
+        
         setupShakeyBell()
     }
     

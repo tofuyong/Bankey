@@ -32,6 +32,8 @@
 		DE98DC0A2B2193CD00D61E06 /* AccountSummaryViewController+Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE98DC092B2193CD00D61E06 /* AccountSummaryViewController+Networking.swift */; };
 		DED704782B10413000181184 /* ShakeyBell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED704772B10413000181184 /* ShakeyBell.swift */; };
 		DEE76FD42AFE69CD0065BCAE /* AccountSummaryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE76FD32AFE69CD0065BCAE /* AccountSummaryCell.swift */; };
+		DEE7F2AC2B2B4E0200C180B4 /* SkeletonLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE7F2AB2B2B4E0200C180B4 /* SkeletonLoadable.swift */; };
+		DEE7F2AE2B2B50B700C180B4 /* SkeletonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE7F2AD2B2B50B700C180B4 /* SkeletonCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,8 @@
 		DE98DC092B2193CD00D61E06 /* AccountSummaryViewController+Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountSummaryViewController+Networking.swift"; sourceTree = "<group>"; };
 		DED704772B10413000181184 /* ShakeyBell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeyBell.swift; sourceTree = "<group>"; };
 		DEE76FD32AFE69CD0065BCAE /* AccountSummaryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSummaryCell.swift; sourceTree = "<group>"; };
+		DEE7F2AB2B2B4E0200C180B4 /* SkeletonLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonLoadable.swift; sourceTree = "<group>"; };
+		DEE7F2AD2B2B50B700C180B4 /* SkeletonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +231,8 @@
 			isa = PBXGroup;
 			children = (
 				DEE76FD32AFE69CD0065BCAE /* AccountSummaryCell.swift */,
+				DEE7F2AB2B2B4E0200C180B4 /* SkeletonLoadable.swift */,
+				DEE7F2AD2B2B50B700C180B4 /* SkeletonCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -344,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE6D86C62ADD113B00BD2114 /* UIViewController+Utils.swift in Sources */,
+				DEE7F2AE2B2B50B700C180B4 /* SkeletonCell.swift in Sources */,
 				DE98DC082B217B1C00D61E06 /* Date+Utils.swift in Sources */,
 				DE8221CF2AD53B33009E7898 /* LoginView.swift in Sources */,
 				DE6D86C42ADD054B00BD2114 /* LocalState.swift in Sources */,
@@ -361,6 +368,7 @@
 				DE5343B32AF90F23008E28F8 /* AccountSummaryViewController.swift in Sources */,
 				DE8221B92AD537FC009E7898 /* AppDelegate.swift in Sources */,
 				DE50DCBD2AD7C98100A266D3 /* OnboardingContainerViewController.swift in Sources */,
+				DEE7F2AC2B2B4E0200C180B4 /* SkeletonLoadable.swift in Sources */,
 				DE98DC0A2B2193CD00D61E06 /* AccountSummaryViewController+Networking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
