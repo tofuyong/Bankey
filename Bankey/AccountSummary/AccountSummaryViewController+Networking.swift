@@ -27,6 +27,9 @@ struct Profile: Codable {
 
 extension AccountSummaryViewController {
     func fetchProfile(forUserId userId: String, completion: @escaping (Result<Profile, Networking>) -> Void) {
+        // to test unhappy path
+        // completion(.failure(.decodingError))
+        
         let url = URL(string: "https://fierce-retreat-36855.herokuapp.com/bankey/profile/\(userId)")!
         
         URLSession.shared.dataTask(with: url) { data, response, error in
@@ -54,6 +57,10 @@ struct Account: Codable {
     let name: String
     let amount: Decimal
     let createdDateTime: Date
+    
+    static func makeSkeleton() -> Account {
+        return Account (id: "1", type: .Banking, name: "Account name", amount: 0.0, createdDateTime: Date())
+    }
 }
 
 extension AccountSummaryViewController {

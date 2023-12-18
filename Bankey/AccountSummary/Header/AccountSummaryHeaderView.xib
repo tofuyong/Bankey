@@ -21,30 +21,26 @@
             <rect key="frame" x="0.0" y="0.0" width="370" height="144"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Bankey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IfI-Wd-icT">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Bankey" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IfI-Wd-icT">
                     <rect key="frame" x="18" y="-7" width="88.666666666666657" height="73.666666666666686"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Good morning," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HPw-uN-QbD">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Good morning," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HPw-uN-QbD">
                     <rect key="frame" x="18" y="54" width="113.33333333333334" height="20.333333333333314"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5b9-jM-ci5">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5b9-jM-ci5">
                     <rect key="frame" x="19" y="110" width="36" height="20.333333333333343"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tofu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gwl-fS-FGR">
-                    <rect key="frame" x="19" y="81" width="33.666666666666657" height="20.333333333333343"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tofu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gwl-fS-FGR">
+                    <rect key="frame" x="18.999999999999996" y="81" width="33.666666666666657" height="20.333333333333329"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -57,6 +53,15 @@
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="HPw-uN-QbD" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="18" id="M1B-Bt-9Rw"/>
+                <constraint firstItem="5b9-jM-ci5" firstAttribute="top" secondItem="Gwl-fS-FGR" secondAttribute="bottom" constant="8.6666666666666572" id="SMx-Je-7On"/>
+                <constraint firstItem="Gwl-fS-FGR" firstAttribute="leading" secondItem="5b9-jM-ci5" secondAttribute="leading" id="Z2q-8q-rDR"/>
+                <constraint firstItem="Gwl-fS-FGR" firstAttribute="top" secondItem="HPw-uN-QbD" secondAttribute="bottom" constant="6.6666666666666856" id="flb-tO-sMQ"/>
+                <constraint firstItem="Gwl-fS-FGR" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="19" id="gVT-QC-xa8"/>
+                <constraint firstItem="HPw-uN-QbD" firstAttribute="leading" secondItem="IfI-Wd-icT" secondAttribute="leading" id="qXo-OV-qxz"/>
+                <constraint firstAttribute="bottom" secondItem="Gwl-fS-FGR" secondAttribute="bottom" constant="42.666666666666657" id="rmQ-yh-YT1"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="137.40458015267174" y="19.718309859154932"/>
         </view>
