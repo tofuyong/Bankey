@@ -97,30 +97,6 @@ extension AccountSummaryViewController {
 }
 
 extension AccountSummaryViewController: UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-////        let cell = UITableViewCell()
-////        cell.textLabel?.text = games[indexPath.row]
-//
-////        let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryCell.reuseID, for: indexPath) as! AccountSummaryCell
-////        return cell
-//        guard !accounts.isEmpty else { return UITableViewCell() }
-//
-//        let cell = tableView.dequeueReusableCell(withIdentifier: AccountSummaryCell.reuseID, for: indexPath) as! AccountSummaryCell
-//        let account = accounts[indexPath.row]
-////        cell.configure(with: account)
-//
-//        // Create a ViewModel from the Account object (not in lecture)
-//        let viewModel = AccountSummaryCell.ViewModel(
-//            accountType: account.type,
-//            accountName: account.name,
-//            balance: account.amount
-//        )
-//
-//        cell.configure(with: viewModel)
-//
-//        return cell
-//    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard !accountCellViewModels.isEmpty else { return UITableViewCell() }
         let account = accountCellViewModels[indexPath.row]
@@ -147,58 +123,57 @@ extension AccountSummaryViewController: UITableViewDelegate {
 }
 
 // MARK: - Networking
+var profileManager: ProfileManageable = ProfileManager()
+
 extension AccountSummaryViewController {
     private func fetchData() {
         let group = DispatchGroup()
         let userId = String(Int.random(in: 1..<4))
         
+        fetchProfile(group: group, userId: userId)
+        fetchAccounts(group: group, userId: userId)
+        
+        group.notify(queue: .main) {
+            self.reloadView()
+        }
+    }
+    
+    private func fetchProfile(group: DispatchGroup, userId: String) {
         group.enter()
         
-        fetchProfile(forUserId: userId) { result in
+        profileManager.fetchProfile(forUserId: userId) { result in
             switch result {
-                
             case .success(let profile):
                 self.profile = profile
-                self.configureTableHeaderView(with: profile)
-                
-            case .failure(let error):
-                let title: String
-                let message: String
-                switch error {
-                    case .serverError:
-                        title = "Server Error"
-                        message = "Ensure you are connected to the internet. Please try again."
-                    case .decodingError:
-                        title = "Decoder Error"
-                        message = "We could not process your request. Please try again."
-                }
-                self.showErrorAlert(title: title, message: message)
-            }
-            group.leave()
-        }
-        
-        group.enter()
-        fetchAccounts(forUserId: userId) { result in
-            switch result {
-            case .success(let accounts):
-                self.accounts = accounts
-                self.configureTableCells(with: accounts)
             case .failure(let error):
                 self.displayError(error)
             }
             group.leave()
         }
+    }
         
-        group.notify(queue: .main) {
-            self.tableView.refreshControl?.endRefreshing()
-                
-            guard let profile = self.profile else { return }
-            
-            self.isLoaded = true
-            self.configureTableHeaderView(with: profile) // both header and cell will reload at the same time
-            self.configureTableCells(with: self.accounts) // both header and cell will reload at the same time
-            self.tableView.reloadData()
+    private func fetchAccounts(group: DispatchGroup, userId: String) {
+        group.enter()
+        fetchAccounts(forUserId: userId) { result in
+            switch result {
+            case .success(let accounts):
+                self.accounts = accounts
+            case .failure(let error):
+                self.displayError(error)
+            }
+            group.leave()
         }
+    }
+        
+    private func reloadView() {
+        self.tableView.refreshControl?.endRefreshing()
+            
+        guard let profile = self.profile else { return }
+        
+        self.isLoaded = true
+        self.configureTableHeaderView(with: profile) // both header and cell will reload at the same time
+        self.configureTableCells(with: self.accounts) // both header and cell will reload at the same time
+        self.tableView.reloadData()
     }
     
     private func configureTableHeaderView(with profile: Profile) {
@@ -222,7 +197,12 @@ extension AccountSummaryViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    private func displayError(_ error: Networking) {
+    private func displayError(_ error: NetworkError) {
+        let titleAndMessage = titleAndMessage(for: error)
+        self.showErrorAlert(title: titleAndMessage.0, message: titleAndMessage.1)
+    }
+    
+    private func titleAndMessage(for error: NetworkError) -> (String, String) {
         let title: String
         let message: String
         switch error {
@@ -233,9 +213,8 @@ extension AccountSummaryViewController {
             title = "Network Error"
             message = "Ensure you are connected to the internet. Please try again."
         }
-        self.showErrorAlert(title: title, message: message)
+        return (title, message)
     }
-    
 }
 
 // MARK: - Actions
@@ -255,5 +234,16 @@ extension AccountSummaryViewController {
         profile = nil
         accounts = []
         isLoaded = false
+    }
+}
+
+// MARK: - Unit Testing
+extension AccountSummaryViewController {
+    func titleAndMessageForTesting(for error: NetworkError) -> (String, String) {
+        return titleAndMessage(for: error)
+    }
+    
+    func forceFetchProfile() {
+        fetchProfile(group: DispatchGroup(), userId: "1")
     }
 }
